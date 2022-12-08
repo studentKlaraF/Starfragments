@@ -1,0 +1,56 @@
+@model SeminarskaNaloga.Models.Racun
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Racun</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="RacunId" />
+            <div class="form-group">
+                <label asp-for="datum" class="control-label"></label>
+                <input asp-for="datum" class="form-control" />
+                <span asp-validation-for="datum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="kolicina" class="control-label"></label>
+                <input asp-for="kolicina" class="form-control" />
+                <span asp-validation-for="kolicina" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="cena" class="control-label"></label>
+                <input asp-for="cena" class="form-control" />
+                <span asp-validation-for="cena" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="postnina" class="control-label"></label>
+                <input asp-for="postnina" class="form-control" />
+                <span asp-validation-for="postnina" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UporabnikId" class="control-label"></label>
+                <select asp-for="UporabnikId" class="form-control" asp-items="ViewBag.UporabnikId"></select>
+                <span asp-validation-for="UporabnikId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NarociloId" class="control-label"></label>
+                <select asp-for="NarociloId" class="form-control" asp-items="ViewBag.NarociloId"></select>
+                <span asp-validation-for="NarociloId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
