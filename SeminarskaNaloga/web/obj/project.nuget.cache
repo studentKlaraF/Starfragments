@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OPWuutJkedTpc4gSniEHEVA5TPNaTU/tZ+57//jT/JL+UssXyA8K1Zh4/xn1eKZazSkNF7zQmWifMCzHb3o9uw==",
+  "dgSpecHash": "5/Sou5DnLxGfBaiCEU4MPEAfQcg0mBJYw5p4jO6fhsQfn4aUfVWdffh3RqohfAExg2mNTDWH2ttafxBKBvePRg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\fajdi\\Desktop\\College stuff\\Informacijski sistemi\\Vaje 3\\SeminarskaNaloga\\web\\SeminarskaNaloga.csproj",
+  "projectFilePath": "C:\\Users\\fajdi\\Desktop\\Vaje 3\\SeminarskaNaloga\\web\\SeminarskaNaloga.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\fajdi\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\fajdi\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",

@@ -10,85 +10,85 @@ using SeminarskaNaloga.Models;
 
 namespace SeminarskaNaloga.Controllers
 {
-    public class NarociloController : Controller
+    public class TrgovinaController : Controller
     {
         private readonly TrgovinaContext _context;
 
-        public NarociloController(TrgovinaContext context)
+        public TrgovinaController(TrgovinaContext context)
         {
             _context = context;
         }
 
-        // GET: Narocilo
+        // GET: Trgovina
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Narocilo.ToListAsync());
+              return View(await _context.Trgovina.ToListAsync());
         }
 
-        // GET: Narocilo/Details/5
+        // GET: Trgovina/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Narocilo == null)
+            if (id == null || _context.Trgovina == null)
             {
                 return NotFound();
             }
 
-            var narocilo = await _context.Narocilo
-                .FirstOrDefaultAsync(m => m.NarociloId == id);
-            if (narocilo == null)
+            var trgovina = await _context.Trgovina
+                .FirstOrDefaultAsync(m => m.TrgovinaId == id);
+            if (trgovina == null)
             {
                 return NotFound();
             }
 
-            return View(narocilo);
+            return View(trgovina);
         }
 
-        // GET: Narocilo/Create
+        // GET: Trgovina/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Narocilo/Create
+        // POST: Trgovina/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("NarociloId,kolicina,skupnaCena")] Narocilo narocilo)
+        public async Task<IActionResult> Create([Bind("TrgovinaId,img,ime")] Trgovina trgovina)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(narocilo);
+                _context.Add(trgovina);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(narocilo);
+            return View(trgovina);
         }
 
-        // GET: Narocilo/Edit/5
+        // GET: Trgovina/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Narocilo == null)
+            if (id == null || _context.Trgovina == null)
             {
                 return NotFound();
             }
 
-            var narocilo = await _context.Narocilo.FindAsync(id);
-            if (narocilo == null)
+            var trgovina = await _context.Trgovina.FindAsync(id);
+            if (trgovina == null)
             {
                 return NotFound();
             }
-            return View(narocilo);
+            return View(trgovina);
         }
 
-        // POST: Narocilo/Edit/5
+        // POST: Trgovina/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("NarociloId,kolicina,skupnaCena")] Narocilo narocilo)
+        public async Task<IActionResult> Edit(int id, [Bind("TrgovinaId,img,ime")] Trgovina trgovina)
         {
-            if (id != narocilo.NarociloId)
+            if (id != trgovina.TrgovinaId)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace SeminarskaNaloga.Controllers
             {
                 try
                 {
-                    _context.Update(narocilo);
+                    _context.Update(trgovina);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!NarociloExists(narocilo.NarociloId))
+                    if (!TrgovinaExists(trgovina.TrgovinaId))
                     {
                         return NotFound();
                     }
@@ -113,49 +113,49 @@ namespace SeminarskaNaloga.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(narocilo);
+            return View(trgovina);
         }
 
-        // GET: Narocilo/Delete/5
+        // GET: Trgovina/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Narocilo == null)
+            if (id == null || _context.Trgovina == null)
             {
                 return NotFound();
             }
 
-            var narocilo = await _context.Narocilo
-                .FirstOrDefaultAsync(m => m.NarociloId == id);
-            if (narocilo == null)
+            var trgovina = await _context.Trgovina
+                .FirstOrDefaultAsync(m => m.TrgovinaId == id);
+            if (trgovina == null)
             {
                 return NotFound();
             }
 
-            return View(narocilo);
+            return View(trgovina);
         }
 
-        // POST: Narocilo/Delete/5
+        // POST: Trgovina/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Narocilo == null)
+            if (_context.Trgovina == null)
             {
-                return Problem("Entity set 'TrgovinaContext.Narocilo'  is null.");
+                return Problem("Entity set 'TrgovinaContext.Trgovina'  is null.");
             }
-            var narocilo = await _context.Narocilo.FindAsync(id);
-            if (narocilo != null)
+            var trgovina = await _context.Trgovina.FindAsync(id);
+            if (trgovina != null)
             {
-                _context.Narocilo.Remove(narocilo);
+                _context.Trgovina.Remove(trgovina);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool NarociloExists(int id)
+        private bool TrgovinaExists(int id)
         {
-          return _context.Narocilo.Any(e => e.NarociloId == id);
+          return _context.Trgovina.Any(e => e.TrgovinaId == id);
         }
     }
 }

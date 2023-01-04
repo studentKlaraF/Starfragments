@@ -12,8 +12,8 @@ using SeminarskaNaloga.Data;
 namespace SeminarskaNaloga.Migrations
 {
     [DbContext(typeof(TrgovinaContext))]
-    [Migration("20221206152921_AppUser")]
-    partial class AppUser
+    [Migration("20230104224453_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -104,10 +104,12 @@ namespace SeminarskaNaloga.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -144,10 +146,12 @@ namespace SeminarskaNaloga.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -202,6 +206,9 @@ namespace SeminarskaNaloga.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TrgovinaId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -228,12 +235,20 @@ namespace SeminarskaNaloga.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("TrgovinaId");
+
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("SeminarskaNaloga.Models.Artikel", b =>
                 {
                     b.Property<int>("ArtikelId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NarociloId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TrgovinaId")
                         .HasColumnType("int");
 
                     b.Property<double>("cena")
@@ -248,12 +263,36 @@ namespace SeminarskaNaloga.Migrations
                     b.Property<string>("opis")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("zaloga")
+                    b.Property<int?>("vrstaArtiklaId")
                         .HasColumnType("int");
 
                     b.HasKey("ArtikelId");
 
+                    b.HasIndex("NarociloId");
+
+                    b.HasIndex("TrgovinaId");
+
+                    b.HasIndex("vrstaArtiklaId");
+
                     b.ToTable("Artikel", (string)null);
+                });
+
+            modelBuilder.Entity("SeminarskaNaloga.Models.Lastnik", b =>
+                {
+                    b.Property<int>("LastnikId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LastnikId"), 1L, 1);
+
+                    b.Property<int?>("TrgovinaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LastnikId");
+
+                    b.HasIndex("TrgovinaId");
+
+                    b.ToTable("Lastnik", (string)null);
                 });
 
             modelBuilder.Entity("SeminarskaNaloga.Models.Narocilo", b =>
@@ -261,157 +300,84 @@ namespace SeminarskaNaloga.Migrations
                     b.Property<int>("NarociloId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ArtikelId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("datum")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("kolicina")
                         .HasColumnType("int");
 
-                    b.Property<float>("vrednost")
-                        .HasColumnType("real");
+                    b.Property<double>("skupnaCena")
+                        .HasColumnType("float");
 
                     b.HasKey("NarociloId");
 
-                    b.HasIndex("ArtikelId");
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Narocilo", (string)null);
                 });
 
-            modelBuilder.Entity("SeminarskaNaloga.Models.Racun", b =>
+            modelBuilder.Entity("SeminarskaNaloga.Models.Ocena", b =>
                 {
-                    b.Property<int>("RacunId")
+                    b.Property<int>("OcenaId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("NarociloId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OcenaId"), 1L, 1);
 
-                    b.Property<int>("UporabnikId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UporabnikId1")
+                    b.Property<string>("AppUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<float>("cena")
-                        .HasColumnType("real");
-
-                    b.Property<DateTime>("datum")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("kolicina")
+                    b.Property<int>("ArtikelId")
                         .HasColumnType("int");
 
-                    b.Property<float>("postnina")
-                        .HasColumnType("real");
+                    b.Property<string>("Komentar")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RacunId");
+                    b.Property<int>("vrednostOcene")
+                        .HasColumnType("int");
 
-                    b.HasIndex("NarociloId");
+                    b.HasKey("OcenaId");
 
-                    b.HasIndex("UporabnikId1");
+                    b.HasIndex("AppUserId");
 
-                    b.ToTable("Racun", (string)null);
+                    b.HasIndex("ArtikelId");
+
+                    b.ToTable("Ocena", (string)null);
                 });
 
-            modelBuilder.Entity("SeminarskaNaloga.Models.Uporabnik", b =>
+            modelBuilder.Entity("SeminarskaNaloga.Models.Trgovina", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
+                    b.Property<int>("TrgovinaId")
                         .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("UporabnikId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("admin")
-                        .HasColumnType("bit");
 
                     b.Property<string>("ime")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("naslov")
+                    b.Property<string>("img")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("posta")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("TrgovinaId");
 
-                    b.Property<string>("priimek")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("stPoste")
-                        .HasColumnType("int");
-
-                    b.Property<int>("telefon")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Uporabnik", (string)null);
+                    b.ToTable("Trgovina", (string)null);
                 });
 
-            modelBuilder.Entity("SeminarskaNaloga.Models.ZgodovinaNarocanja", b =>
+            modelBuilder.Entity("SeminarskaNaloga.Models.vrstaArtikla", b =>
                 {
-                    b.Property<int>("ZgodovinaNarocanjaId")
+                    b.Property<int>("vrstaArtiklaId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("NarociloId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("vrstaArtiklaId"), 1L, 1);
 
-                    b.Property<int>("UporabnikId")
-                        .HasColumnType("int");
+                    b.Property<string>("opis")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UporabnikId1")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("vrsta")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ZgodovinaNarocanjaId");
+                    b.HasKey("vrstaArtiklaId");
 
-                    b.HasIndex("NarociloId");
-
-                    b.HasIndex("UporabnikId1");
-
-                    b.ToTable("ZgodovinaNarocanja", (string)null);
+                    b.ToTable("vrstaArtikla", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -465,49 +431,90 @@ namespace SeminarskaNaloga.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SeminarskaNaloga.Models.AppUser", b =>
+                {
+                    b.HasOne("SeminarskaNaloga.Models.Trgovina", "Trgovina")
+                        .WithMany()
+                        .HasForeignKey("TrgovinaId");
+
+                    b.Navigation("Trgovina");
+                });
+
+            modelBuilder.Entity("SeminarskaNaloga.Models.Artikel", b =>
+                {
+                    b.HasOne("SeminarskaNaloga.Models.Narocilo", null)
+                        .WithMany("Artikli")
+                        .HasForeignKey("NarociloId");
+
+                    b.HasOne("SeminarskaNaloga.Models.Trgovina", null)
+                        .WithMany("Artikli")
+                        .HasForeignKey("TrgovinaId");
+
+                    b.HasOne("SeminarskaNaloga.Models.vrstaArtikla", "vrstaArtikla")
+                        .WithMany("Artikeli")
+                        .HasForeignKey("vrstaArtiklaId");
+
+                    b.Navigation("vrstaArtikla");
+                });
+
+            modelBuilder.Entity("SeminarskaNaloga.Models.Lastnik", b =>
+                {
+                    b.HasOne("SeminarskaNaloga.Models.Trgovina", "Trgovina")
+                        .WithMany()
+                        .HasForeignKey("TrgovinaId");
+
+                    b.Navigation("Trgovina");
+                });
+
             modelBuilder.Entity("SeminarskaNaloga.Models.Narocilo", b =>
                 {
-                    b.HasOne("SeminarskaNaloga.Models.Artikel", "Artikel")
+                    b.HasOne("SeminarskaNaloga.Models.AppUser", "AppUser")
+                        .WithMany("Narocila")
+                        .HasForeignKey("AppUserId");
+
+                    b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("SeminarskaNaloga.Models.Ocena", b =>
+                {
+                    b.HasOne("SeminarskaNaloga.Models.AppUser", "AppUser")
                         .WithMany()
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("SeminarskaNaloga.Models.Artikel", "Artikel")
+                        .WithMany("Ocene")
                         .HasForeignKey("ArtikelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("AppUser");
+
                     b.Navigation("Artikel");
                 });
 
-            modelBuilder.Entity("SeminarskaNaloga.Models.Racun", b =>
+            modelBuilder.Entity("SeminarskaNaloga.Models.AppUser", b =>
                 {
-                    b.HasOne("SeminarskaNaloga.Models.Narocilo", "Narocilo")
-                        .WithMany()
-                        .HasForeignKey("NarociloId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SeminarskaNaloga.Models.Uporabnik", "Uporabnik")
-                        .WithMany()
-                        .HasForeignKey("UporabnikId1");
-
-                    b.Navigation("Narocilo");
-
-                    b.Navigation("Uporabnik");
+                    b.Navigation("Narocila");
                 });
 
-            modelBuilder.Entity("SeminarskaNaloga.Models.ZgodovinaNarocanja", b =>
+            modelBuilder.Entity("SeminarskaNaloga.Models.Artikel", b =>
                 {
-                    b.HasOne("SeminarskaNaloga.Models.Narocilo", "Narocilo")
-                        .WithMany()
-                        .HasForeignKey("NarociloId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Ocene");
+                });
 
-                    b.HasOne("SeminarskaNaloga.Models.Uporabnik", "Uporabnik")
-                        .WithMany()
-                        .HasForeignKey("UporabnikId1");
+            modelBuilder.Entity("SeminarskaNaloga.Models.Narocilo", b =>
+                {
+                    b.Navigation("Artikli");
+                });
 
-                    b.Navigation("Narocilo");
+            modelBuilder.Entity("SeminarskaNaloga.Models.Trgovina", b =>
+                {
+                    b.Navigation("Artikli");
+                });
 
-                    b.Navigation("Uporabnik");
+            modelBuilder.Entity("SeminarskaNaloga.Models.vrstaArtikla", b =>
+                {
+                    b.Navigation("Artikeli");
                 });
 #pragma warning restore 612, 618
         }

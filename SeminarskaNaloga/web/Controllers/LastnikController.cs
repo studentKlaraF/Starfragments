@@ -7,90 +7,88 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SeminarskaNaloga.Data;
 using SeminarskaNaloga.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace SeminarskaNaloga.Controllers
 {
-    [Authorize]
-    public class ZgodovinaNarocanjaController : Controller
+    public class LastnikController : Controller
     {
         private readonly TrgovinaContext _context;
 
-        public ZgodovinaNarocanjaController(TrgovinaContext context)
+        public LastnikController(TrgovinaContext context)
         {
             _context = context;
         }
 
-        // GET: ZgodovinaNarocanja
+        // GET: Lastnik
         public async Task<IActionResult> Index()
         {
-              return View(await _context.ZgodovinaNarocanja.ToListAsync());
+              return View(await _context.Lastnik.ToListAsync());
         }
 
-        // GET: ZgodovinaNarocanja/Details/5
+        // GET: Lastnik/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.ZgodovinaNarocanja == null)
+            if (id == null || _context.Lastnik == null)
             {
                 return NotFound();
             }
 
-            var zgodovinaNarocanja = await _context.ZgodovinaNarocanja
-                .FirstOrDefaultAsync(m => m.ZgodovinaNarocanjaId == id);
-            if (zgodovinaNarocanja == null)
+            var lastnik = await _context.Lastnik
+                .FirstOrDefaultAsync(m => m.LastnikId == id);
+            if (lastnik == null)
             {
                 return NotFound();
             }
 
-            return View(zgodovinaNarocanja);
+            return View(lastnik);
         }
 
-        // GET: ZgodovinaNarocanja/Create
+        // GET: Lastnik/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: ZgodovinaNarocanja/Create
+        // POST: Lastnik/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ZgodovinaNarocanjaId")] ZgodovinaNarocanja zgodovinaNarocanja)
+        public async Task<IActionResult> Create([Bind("LastnikId")] Lastnik lastnik)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(zgodovinaNarocanja);
+                _context.Add(lastnik);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(zgodovinaNarocanja);
+            return View(lastnik);
         }
 
-        // GET: ZgodovinaNarocanja/Edit/5
+        // GET: Lastnik/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.ZgodovinaNarocanja == null)
+            if (id == null || _context.Lastnik == null)
             {
                 return NotFound();
             }
 
-            var zgodovinaNarocanja = await _context.ZgodovinaNarocanja.FindAsync(id);
-            if (zgodovinaNarocanja == null)
+            var lastnik = await _context.Lastnik.FindAsync(id);
+            if (lastnik == null)
             {
                 return NotFound();
             }
-            return View(zgodovinaNarocanja);
+            return View(lastnik);
         }
 
-        // POST: ZgodovinaNarocanja/Edit/5
+        // POST: Lastnik/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ZgodovinaNarocanjaId")] ZgodovinaNarocanja zgodovinaNarocanja)
+        public async Task<IActionResult> Edit(int id, [Bind("LastnikId")] Lastnik lastnik)
         {
-            if (id != zgodovinaNarocanja.ZgodovinaNarocanjaId)
+            if (id != lastnik.LastnikId)
             {
                 return NotFound();
             }
@@ -99,12 +97,12 @@ namespace SeminarskaNaloga.Controllers
             {
                 try
                 {
-                    _context.Update(zgodovinaNarocanja);
+                    _context.Update(lastnik);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ZgodovinaNarocanjaExists(zgodovinaNarocanja.ZgodovinaNarocanjaId))
+                    if (!LastnikExists(lastnik.LastnikId))
                     {
                         return NotFound();
                     }
@@ -115,49 +113,49 @@ namespace SeminarskaNaloga.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(zgodovinaNarocanja);
+            return View(lastnik);
         }
 
-        // GET: ZgodovinaNarocanja/Delete/5
+        // GET: Lastnik/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.ZgodovinaNarocanja == null)
+            if (id == null || _context.Lastnik == null)
             {
                 return NotFound();
             }
 
-            var zgodovinaNarocanja = await _context.ZgodovinaNarocanja
-                .FirstOrDefaultAsync(m => m.ZgodovinaNarocanjaId == id);
-            if (zgodovinaNarocanja == null)
+            var lastnik = await _context.Lastnik
+                .FirstOrDefaultAsync(m => m.LastnikId == id);
+            if (lastnik == null)
             {
                 return NotFound();
             }
 
-            return View(zgodovinaNarocanja);
+            return View(lastnik);
         }
 
-        // POST: ZgodovinaNarocanja/Delete/5
+        // POST: Lastnik/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.ZgodovinaNarocanja == null)
+            if (_context.Lastnik == null)
             {
-                return Problem("Entity set 'TrgovinaContext.ZgodovinaNarocanja'  is null.");
+                return Problem("Entity set 'TrgovinaContext.Lastnik'  is null.");
             }
-            var zgodovinaNarocanja = await _context.ZgodovinaNarocanja.FindAsync(id);
-            if (zgodovinaNarocanja != null)
+            var lastnik = await _context.Lastnik.FindAsync(id);
+            if (lastnik != null)
             {
-                _context.ZgodovinaNarocanja.Remove(zgodovinaNarocanja);
+                _context.Lastnik.Remove(lastnik);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ZgodovinaNarocanjaExists(int id)
+        private bool LastnikExists(int id)
         {
-          return _context.ZgodovinaNarocanja.Any(e => e.ZgodovinaNarocanjaId == id);
+          return _context.Lastnik.Any(e => e.LastnikId == id);
         }
     }
 }

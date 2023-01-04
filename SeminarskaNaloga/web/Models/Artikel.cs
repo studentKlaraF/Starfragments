@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Authorization;
+using SeminarskaNaloga.Data;
 
 namespace SeminarskaNaloga.Models;
 public class Artikel
@@ -11,6 +12,7 @@ public class Artikel
 	public string naziv { get; set; }
 	public double cena { get; set; }
 	public string opis { get; set; }
-	public int zaloga { get; set; }
+	public vrstaArtikla vrstaArtikla { get; set;}
+	public List<Ocena> Ocene { get; set; }
 
 }

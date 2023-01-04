@@ -7,18 +7,20 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace SeminarskaNaloga.Data
 {
+    
     public static class DbInitializer
+    
     {
         public static void Initialize(TrgovinaContext context)
         {
             context.Database.EnsureCreated();
-
+            /*
             // Pogleda za stranke
             if (context.Uporabnik.Any())
             {
                 return;   // DB has been seeded
             }
-
+            
             var uporabniki = new Uporabnik[]
             {
                 new Uporabnik{UporabnikId=1,ime="Carson",priimek="Alexander",naslov="Ulica zmage 5",posta="Ljubljana",stPoste=1000,telefon=070995170,admin=true},
@@ -32,12 +34,12 @@ namespace SeminarskaNaloga.Data
             };
 
             context.Uporabnik.AddRange(uporabniki);
-            context.SaveChanges();
+            context.SaveChanges();*/
 
             var artikli = new Artikel[]
             {
-                new Artikel{ArtikelId=1050,naziv="Chemistry",cena=3.50,opis="Zelo kvalitetno",zaloga=15},
-                new Artikel{ArtikelId=1051,naziv="Cat",cena=30,opis="Zelo puhasto",zaloga=19}
+                new Artikel{ArtikelId=1050,naziv="Chemistry",cena=3.50,opis="Zelo kvalitetno"},
+                new Artikel{ArtikelId=1051,naziv="Cat",cena=30,opis="Zelo puhasto"}
             };
 
             context.Artikel.AddRange(artikli);

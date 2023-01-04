@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SeminarskaNaloga.Data;
 using SeminarskaNaloga.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace SeminarskaNaloga.Controllers
 {
@@ -45,7 +44,6 @@ namespace SeminarskaNaloga.Controllers
         }
 
         // GET: Artikel/Create
-        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -56,8 +54,7 @@ namespace SeminarskaNaloga.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> Create([Bind("ArtikelId,img,naziv,cena,opis,zaloga")] Artikel artikel)
+        public async Task<IActionResult> Create([Bind("ArtikelId,img,naziv,cena,opis")] Artikel artikel)
         {
             if (ModelState.IsValid)
             {
@@ -69,7 +66,6 @@ namespace SeminarskaNaloga.Controllers
         }
 
         // GET: Artikel/Edit/5
-        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Artikel == null)
@@ -88,10 +84,9 @@ namespace SeminarskaNaloga.Controllers
         // POST: Artikel/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ArtikelId,img,naziv,cena,opis,zaloga")] Artikel artikel)
+        public async Task<IActionResult> Edit(int id, [Bind("ArtikelId,img,naziv,cena,opis")] Artikel artikel)
         {
             if (id != artikel.ArtikelId)
             {
@@ -139,7 +134,6 @@ namespace SeminarskaNaloga.Controllers
             return View(artikel);
         }
 
-        [Authorize]
         // POST: Artikel/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
