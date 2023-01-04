@@ -11,7 +11,7 @@ var connectionString = builder.Configuration.GetConnectionString("AzureContext")
 builder.Services.AddControllersWithViews();
 //builder.Services.AddDbContext<SchoolContext>(options =>
 //            options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolContext")));
-builder.Services.AddDefaultIdentity<AppUser>()
+builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<TrgovinaContext>();
 
