@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using SeminarskaNaloga.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//povezavni string za bazo
 var connectionString = builder.Configuration.GetConnectionString("AzureContext");
 
 // Add services to the container.
