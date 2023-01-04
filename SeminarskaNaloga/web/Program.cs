@@ -4,13 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using SeminarskaNaloga.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-//povezavni string za bazo
-var connectionString = builder.Configuration.GetConnectionString("AzureContext");
+var connectionString = builder.Configuration.GetConnectionString("Azure");
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
-//builder.Services.AddDbContext<SchoolContext>(options =>
-//            options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolContext")));
 builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<TrgovinaContext>();
